@@ -15,6 +15,7 @@ function love.load()
 
     gStateMachine = StateMachine {
         ['start'] = function() return StartState() end,
+        ['play'] = function() return PlayState() end
     }
 
     gStateMachine:change('start')
@@ -28,14 +29,29 @@ function push.resize(w, h)
     push:resize(w, h)
 end
 
-function love.keyboard.wasPressed(key)
-    return love.keyboard.keysPressed[key]
-end
-
 function love.keypressed(key)
     love.keyboard.keysPressed[key] = true
 end
 
+function love.mousepressed(x, y, key)
+    love.mouse.keysPressed[key] = true
+end
+
+function love.mousereleased(x, y, key)
+    love.mouse.keysReleased[key] = true 
+end
+
+function love.keyboard.wasPressed(key)
+    return love.keyboard.keysPressed[key]
+end
+
+function love.mouse.wasPressed(key)
+    return love.mouse.keysPressed[key]
+end
+
+function love.mouse.wasReleased(key)
+    return love.mouse.keysReleased[key]
+end
 
 
 function love.update(dt)

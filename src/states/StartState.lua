@@ -24,6 +24,10 @@ end
 
 function StartState:update(dt)
     self.world:update(dt)
+
+    if love.mouse.wasPressed(1) then
+        gStateMachine:change('play')
+    end
     
     if love.keyboard.wasPressed('escape') then
         love.event.quit()

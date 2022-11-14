@@ -7,11 +7,14 @@ require 'src/StateMachine'
 
 require 'src/constants'
 require 'src/Background'
+require 'src/Alien'
+require 'src/Util'
+require 'src/Level'
 
 require 'src/states/BaseState'
 require 'src/states/StartState'
-require 'src/Alien'
-require 'src/Util'
+require 'src/states/PlayState'
+
 
 
 

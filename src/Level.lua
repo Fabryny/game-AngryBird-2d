@@ -1,0 +1,70 @@
+
+
+Level = Class{}
+
+function Level:init()
+    
+    -- create a new "world" (where physics take place), with no x gravity
+    -- and 30 units of Y gravity (for downward force)
+    self.world = love.physics.newWorld(0, 300)
+
+
+
+
+
+    -- the remaining three functions here are sample definitions, but we are not
+    -- implementing any functionality with them in this demo; use-case specific
+    -- http://www.iforce2d.net/b2dtut/collision-anatomy
+    function endContact(a, b, coll)
+        
+    end
+
+    function preSolve(a, b, coll)
+
+    end
+
+    function postSolve(a, b, coll, normalImpulse, tangentImpulse)
+
+    end
+
+    -- register just-defined functions as collision callbacks for world
+    self.world:setCallbacks(beginContact, endContact, preSolve, postSolve)
+
+--[[ 
+
+    -- simple edge shape to represent collision for ground
+    self.edgeShape = love.physics.newEdgeShape(0, 0, VIRTUAL_WIDTH * 3, 0) ]]
+
+
+
+--[[     -- ground data
+    self.groundBody = love.physics.newBody(self.world, -VIRTUAL_WIDTH, VIRTUAL_HEIGHT - 35, 'static')
+    self.groundFixture = love.physics.newFixture(self.groundBody, self.edgeShape)
+    self.groundFixture:setFriction(0.5)
+    self.groundFixture:setUserData('Ground') ]]
+
+    -- background graphics
+    self.background = Background()
+end
+
+function Level:update(dt)
+    
+
+    -- Box2D world update code; resolves collisions and processes callbacks
+    self.world:update(dt)
+
+
+end
+
+function Level:render()
+    
+--[[     -- render ground tiles across full scrollable width of the screen
+    for x = -VIRTUAL_WIDTH, VIRTUAL_WIDTH * 2, 35 do
+        love.graphics.draw(gTextures['tiles'], gFrames['tiles'][12], x, VIRTUAL_HEIGHT - 35)
+    end ]]
+
+
+
+
+
+end
