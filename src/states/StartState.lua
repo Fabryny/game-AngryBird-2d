@@ -1,11 +1,10 @@
 StartState = Class{__includes = BaseState}
 
 function StartState:init()
-   
+    self.background = Background()
 end
 
 function StartState:update(dt)
-  
 
     if love.keyboard.wasPressed('escape') then
         love.event.quit()
@@ -13,6 +12,8 @@ function StartState:update(dt)
 end
 
 function StartState:render()
+    
+    self.background:render()
 
     -- title text
     love.graphics.setColor(64/255, 64/255, 64/255, 200/255)
