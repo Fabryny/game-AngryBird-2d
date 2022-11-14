@@ -56,9 +56,10 @@ end
 
 function love.update(dt)
  
-        gStateMachine:update(dt)
-
-        love.keyboard.keysPressed = {}
+    gStateMachine:update(dt)
+    love.keyboard.keysPressed = {}
+    love.mouse.keysPressed = {}
+    love.mouse.keysReleased = {}
  
 end
 

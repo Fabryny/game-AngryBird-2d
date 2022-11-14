@@ -34,10 +34,19 @@ function Level:init()
     -- aliens in our scene
     self.aliens = {}
 
+    -- obstacles guarding aliens that we can destroy
+    self.obstacles = {}
     
     -- simple edge shape to represent collision for ground
     self.edgeShape = love.physics.newEdgeShape(0, 0, VIRTUAL_WIDTH * 3, 0)
 
+    -- spawn a few obstacles
+    table.insert(self.obstacles, Obstacle(self.world, 'vertical',
+        VIRTUAL_WIDTH - 120, VIRTUAL_HEIGHT - 35 - 110 / 2))
+    table.insert(self.obstacles, Obstacle(self.world, 'vertical',
+        VIRTUAL_WIDTH - 35, VIRTUAL_HEIGHT - 35 - 110 / 2))
+    table.insert(self.obstacles, Obstacle(self.world, 'horizontal',
+        VIRTUAL_WIDTH - 80, VIRTUAL_HEIGHT - 35 - 110 - 35 / 2))
     
     -- spawn an alien to try and destroy
     table.insert(self.aliens, Alien(self.world, 'square', VIRTUAL_WIDTH - 80, VIRTUAL_HEIGHT - TILE_SIZE - ALIEN_SIZE / 2, 'Alien'))
@@ -65,6 +74,10 @@ function Level:render()
     -- render ground tiles across full scrollable width of the screen
     for x = -VIRTUAL_WIDTH, VIRTUAL_WIDTH * 2, 35 do
         love.graphics.draw(gTextures['tiles'], gFrames['tiles'][12], x, VIRTUAL_HEIGHT - 35)
+    end
+
+    for k, obstacle in pairs(self.obstacles) do
+        obstacle:render()
     end
     
     for k, alien in pairs(self.aliens) do

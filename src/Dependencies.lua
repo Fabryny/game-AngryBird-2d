@@ -10,6 +10,7 @@ require 'src/Background'
 require 'src/Alien'
 require 'src/Util'
 require 'src/Level'
+require 'src/Obstacle'
 
 require 'src/states/BaseState'
 require 'src/states/StartState'
@@ -32,13 +33,21 @@ gTextures = {
     
     ['aliens'] = love.graphics.newImage('graphics/aliens.png'),
 
-    
+    ['wood'] = love.graphics.newImage('graphics/wood.png'),
+
     ['tiles'] = love.graphics.newImage('graphics/tiles.png'),
 }
 
 gFrames = {
     ['tiles'] = GenerateQuads(gTextures['tiles'], 35, 35),
-    ['aliens'] = GenerateQuads(gTextures['aliens'], 35, 35),
+    ['aliens'] = GenerateQuads(gTextures['aliens'], 35, 35),    
+    
+    ['wood'] = {
+        love.graphics.newQuad(0, 0, 110, 35, gTextures['wood']:getDimensions()),
+        love.graphics.newQuad(0, 35, 110, 35, gTextures['wood']:getDimensions()),
+        love.graphics.newQuad(320, 180, 35, 110, gTextures['wood']:getDimensions()),
+        love.graphics.newQuad(355, 355, 35, 110, gTextures['wood']:getDimensions())
+    }
 }
 
 gFonts = {
