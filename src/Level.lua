@@ -67,7 +67,11 @@ function Level:init()
                 table.insert(self.destroyedBodies, alienFixture:getBody())
             end
         end
-
+        -- if we hit the ground, play a bounce sound
+        if types['Player'] and types['Ground'] then
+            gSounds['bounce']:stop()
+            gSounds['bounce']:play()
+        end
 
     end
 
@@ -147,6 +151,8 @@ function Level:update(dt)
 
             -- play random wood sound effect
             local soundNum = math.random(5)
+            gSounds['break' .. tostring(soundNum)]:stop()
+            gSounds['break' .. tostring(soundNum)]:play()
         end
     end
 
@@ -154,6 +160,8 @@ function Level:update(dt)
     for i = #self.aliens, 1, -1 do
         if self.aliens[i].body:isDestroyed() then
             table.remove(self.aliens, i)
+            gSounds['kill']:stop()
+            gSounds['kill']:play()
         end
     end
   

@@ -17,8 +17,12 @@ function love.load()
         ['start'] = function() return StartState() end,
         ['play'] = function() return PlayState() end
     }
-
+    
     gStateMachine:change('start')
+
+    gSounds['music']:setLooping(true)
+    gSounds['music']:play()
+
 
     love.keyboard.keysPressed = {}
     love.mouse.keysPressed = {}

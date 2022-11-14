@@ -51,6 +51,10 @@ gFrames = {
     }
 }
 
+-- tweak circular alien quad
+gFrames['aliens'][9]:setViewport(105.5, 35.5, 35, 34.2)
+
+
 gFonts = {
     ['small'] = love.graphics.newFont('fonts/font.ttf', 8),
     ['medium'] = love.graphics.newFont('fonts/font.ttf', 16),
@@ -58,5 +62,14 @@ gFonts = {
     ['huge'] = love.graphics.newFont('fonts/font.ttf', 64)
 }
 
--- tweak circular alien quad
-gFrames['aliens'][9]:setViewport(105.5, 35.5, 35, 34.2)
+gSounds = {
+    ['break1'] = love.audio.newSource('sounds/break1.wav', 'static'),
+    ['break2'] = love.audio.newSource('sounds/break2.wav', 'static'),
+    ['break3'] = love.audio.newSource('sounds/break3.mp3', 'static'),
+    ['break4'] = love.audio.newSource('sounds/break4.wav', 'static'),
+    ['break5'] = love.audio.newSource('sounds/break5.wav', 'static'),
+    ['bounce'] = love.audio.newSource('sounds/bounce.wav', 'static'),
+    ['kill'] = love.audio.newSource('sounds/kill.wav', 'static'),
+
+    ['music'] = love.audio.newSource('sounds/music.wav', 'static')
+}
