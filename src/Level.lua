@@ -200,4 +200,12 @@ function Level:render()
             0, 64, VIRTUAL_WIDTH, 'center')
         love.graphics.setColor(1, 1, 1, 1)
     end
+
+    -- render victory text if all aliens are dead
+    if #self.aliens == 0 then
+     love.graphics.setFont(gFonts['huge'])
+     love.graphics.setColor(0, 0, 0, 1)
+     love.graphics.printf('VICTORY', 0, VIRTUAL_HEIGHT / 2 - 32, VIRTUAL_WIDTH, 'center')
+     love.graphics.setColor(1, 1, 1, 1)
+    end
 end
