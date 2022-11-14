@@ -10,15 +10,9 @@ require 'src/Background'
 
 require 'src/states/BaseState'
 require 'src/states/StartState'
+require 'src/Alien'
+require 'src/Util'
 
-
-
-gFonts = {
-    ['small'] = love.graphics.newFont('fonts/font.ttf', 8),
-    ['medium'] = love.graphics.newFont('fonts/font.ttf', 16),
-    ['large'] = love.graphics.newFont('fonts/font.ttf', 32),
-    ['huge'] = love.graphics.newFont('fonts/font.ttf', 64)
-}
 
 
 gTextures = {
@@ -31,4 +25,18 @@ gTextures = {
     ['colored-desert'] = love.graphics.newImage('graphics/colored_desert.png'),
     ['colored-grass'] = love.graphics.newImage('graphics/colored_grass.png'),
     ['colored-shroom'] = love.graphics.newImage('graphics/colored_shroom.png'),
+
+    
+    ['aliens'] = love.graphics.newImage('graphics/aliens.png'),
+}
+
+gFrames = {
+    ['aliens'] = GenerateQuads(gTextures['aliens'], 35, 35),
+}
+
+gFonts = {
+    ['small'] = love.graphics.newFont('fonts/font.ttf', 8),
+    ['medium'] = love.graphics.newFont('fonts/font.ttf', 16),
+    ['large'] = love.graphics.newFont('fonts/font.ttf', 32),
+    ['huge'] = love.graphics.newFont('fonts/font.ttf', 64)
 }

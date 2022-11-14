@@ -24,6 +24,27 @@ function love.load()
     love.mouse.keysReleased = {}
 
 end
+function push.resize(w, h)
+    push:resize(w, h)
+end
+
+function love.keyboard.wasPressed(key)
+    return love.keyboard.keysPressed[key]
+end
+
+function love.keypressed(key)
+    love.keyboard.keysPressed[key] = true
+end
+
+
+
+function love.update(dt)
+ 
+        gStateMachine:update(dt)
+
+        love.keyboard.keysPressed = {}
+ 
+end
 
 function love.draw()
     push:start()
