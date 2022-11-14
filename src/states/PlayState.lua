@@ -10,6 +10,29 @@ function PlayState:update(dt)
         love.event.quit()
     end
 
+    -- update camera
+    if love.keyboard.isDown('left') then
+        self.levelTranslateX = self.levelTranslateX + MAP_SCROLL_X_SPEED * dt
+        
+        if self.levelTranslateX > VIRTUAL_WIDTH then
+            self.levelTranslateX = VIRTUAL_WIDTH
+        else
+            
+            -- only update background if we were able to scroll the level
+            self.level.background:update(dt)
+        end
+    elseif love.keyboard.isDown('right') then
+        self.levelTranslateX = self.levelTranslateX - MAP_SCROLL_X_SPEED * dt
+
+        if self.levelTranslateX < -VIRTUAL_WIDTH then
+            self.levelTranslateX = -VIRTUAL_WIDTH
+        else
+            
+            -- only update background if we were able to scroll the level
+            self.level.background:update(dt)
+        end
+    end    
+
     self.level:update(dt)
 end
 
