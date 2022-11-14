@@ -24,3 +24,9 @@ function love.load()
     love.mouse.keysReleased = {}
 
 end
+
+function love.draw()
+    push:start()
+    gStateMachine:render()
+    push:finish()
+end
