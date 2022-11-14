@@ -31,9 +31,13 @@ gTextures = {
 
     
     ['aliens'] = love.graphics.newImage('graphics/aliens.png'),
+
+    
+    ['tiles'] = love.graphics.newImage('graphics/tiles.png'),
 }
 
 gFrames = {
+    ['tiles'] = GenerateQuads(gTextures['tiles'], 35, 35),
     ['aliens'] = GenerateQuads(gTextures['aliens'], 35, 35),
 }
 

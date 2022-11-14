@@ -30,18 +30,23 @@ function Level:init()
     -- register just-defined functions as collision callbacks for world
     self.world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 
---[[ 
 
+    -- aliens in our scene
+    self.aliens = {}
+
+    
     -- simple edge shape to represent collision for ground
-    self.edgeShape = love.physics.newEdgeShape(0, 0, VIRTUAL_WIDTH * 3, 0) ]]
+    self.edgeShape = love.physics.newEdgeShape(0, 0, VIRTUAL_WIDTH * 3, 0)
 
+    
+    -- spawn an alien to try and destroy
+    table.insert(self.aliens, Alien(self.world, 'square', VIRTUAL_WIDTH - 80, VIRTUAL_HEIGHT - TILE_SIZE - ALIEN_SIZE / 2, 'Alien'))
 
-
---[[     -- ground data
+    -- ground data
     self.groundBody = love.physics.newBody(self.world, -VIRTUAL_WIDTH, VIRTUAL_HEIGHT - 35, 'static')
     self.groundFixture = love.physics.newFixture(self.groundBody, self.edgeShape)
     self.groundFixture:setFriction(0.5)
-    self.groundFixture:setUserData('Ground') ]]
+    self.groundFixture:setUserData('Ground')
 
     -- background graphics
     self.background = Background()
@@ -57,14 +62,12 @@ function Level:update(dt)
 end
 
 function Level:render()
-    
---[[     -- render ground tiles across full scrollable width of the screen
+    -- render ground tiles across full scrollable width of the screen
     for x = -VIRTUAL_WIDTH, VIRTUAL_WIDTH * 2, 35 do
         love.graphics.draw(gTextures['tiles'], gFrames['tiles'][12], x, VIRTUAL_HEIGHT - 35)
-    end ]]
-
-
-
-
-
+    end
+    
+    for k, alien in pairs(self.aliens) do
+        alien:render()
+    end
 end
