@@ -30,6 +30,8 @@ function Level:init()
     -- register just-defined functions as collision callbacks for world
     self.world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 
+    -- shows alien before being launched and its trajectory arrow
+    self.launchMarker = AlienLaunchMarker(self.world)
 
     -- aliens in our scene
     self.aliens = {}
@@ -63,6 +65,8 @@ end
 
 function Level:update(dt)
     
+    -- update launch marker, which shows trajectory
+    self.launchMarker:update(dt)
 
     -- Box2D world update code; resolves collisions and processes callbacks
     self.world:update(dt)
@@ -76,11 +80,22 @@ function Level:render()
         love.graphics.draw(gTextures['tiles'], gFrames['tiles'][12], x, VIRTUAL_HEIGHT - 35)
     end
 
+    self.launchMarker:render()
+
     for k, obstacle in pairs(self.obstacles) do
         obstacle:render()
     end
     
     for k, alien in pairs(self.aliens) do
         alien:render()
+    end
+
+    -- render instruction text if we haven't launched bird
+    if not self.launchMarker.launched then
+        love.graphics.setFont(gFonts['medium'])
+        love.graphics.setColor(0, 0, 0, 1)
+        love.graphics.printf('Click and drag circular alien to shoot!',
+            0, 64, VIRTUAL_WIDTH, 'center')
+        love.graphics.setColor(1, 1, 1, 1)
     end
 end

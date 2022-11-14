@@ -11,6 +11,7 @@ require 'src/Alien'
 require 'src/Util'
 require 'src/Level'
 require 'src/Obstacle'
+require 'src/AlienLaunchMarker'
 
 require 'src/states/BaseState'
 require 'src/states/StartState'
