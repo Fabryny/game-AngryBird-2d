@@ -8,9 +8,68 @@ function Level:init()
     -- and 30 units of Y gravity (for downward force)
     self.world = love.physics.newWorld(0, 300)
 
+  -- bodies we will destroy after the world update cycle; destroying these in the
+    -- actual collision callbacks can cause stack overflow and other errors
+    self.destroyedBodies = {}
+
+    
+    -- define collision callbacks for our world; the World object expects four,
+    -- one for different stages of any given collision
+    function beginContact(a, b, coll)
+        local types = {}
+        types[a:getUserData()] = true
+        types[b:getUserData()] = true
+
+        -- if we collided between both the player and an obstacle...
+        if types['Obstacle'] and types['Player'] then
+
+            -- grab the body that belongs to the player
+            local playerFixture = a:getUserData() == 'Player' and a or b
+            local obstacleFixture = a:getUserData() == 'Obstacle' and a or b
+            
+            -- destroy the obstacle if player's combined X/Y velocity is high enough
+            local velX, velY = playerFixture:getBody():getLinearVelocity()
+            local sumVel = math.abs(velX) + math.abs(velY)
+
+            if sumVel > 20 then
+                table.insert(self.destroyedBodies, obstacleFixture:getBody())
+            end
+        end
+
+        -- if we collided between an obstacle and an alien, as by debris falling...
+        if types['Obstacle'] and types['Alien'] then
+
+            -- grab the body that belongs to the player
+            local obstacleFixture = a:getUserData() == 'Obstacle' and a or b
+            local alienFixture = a:getUserData() == 'Alien' and a or b
+
+            -- destroy the alien if falling debris is falling fast enough
+            local velX, velY = obstacleFixture:getBody():getLinearVelocity()
+            local sumVel = math.abs(velX) + math.abs(velY)
+
+            if sumVel > 20 then
+                table.insert(self.destroyedBodies, alienFixture:getBody())
+            end
+        end
+
+        -- if we collided between the player and the alien...
+        if types['Player'] and types['Alien'] then
+
+            -- grab the bodies that belong to the player and alien
+            local playerFixture = a:getUserData() == 'Player' and a or b
+            local alienFixture = a:getUserData() == 'Alien' and a or b
+
+            -- destroy the alien if player is traveling fast enough
+            local velX, velY = playerFixture:getBody():getLinearVelocity()
+            local sumVel = math.abs(velX) + math.abs(velY)
+
+            if sumVel > 20 then
+                table.insert(self.destroyedBodies, alienFixture:getBody())
+            end
+        end
 
 
-
+    end
 
     -- the remaining three functions here are sample definitions, but we are not
     -- implementing any functionality with them in this demo; use-case specific
@@ -71,7 +130,33 @@ function Level:update(dt)
     -- Box2D world update code; resolves collisions and processes callbacks
     self.world:update(dt)
 
-    
+    -- destroy all bodies we calculated to destroy during the update call
+    for k, body in pairs(self.destroyedBodies) do
+        if not body:isDestroyed() then 
+            body:destroy()
+        end
+    end
+
+    -- reset destroyed bodies to empty table for next update phase
+    self.destroyedBodies = {}
+
+    -- remove all destroyed obstacles from level
+    for i = #self.obstacles, 1, -1 do
+        if self.obstacles[i].body:isDestroyed() then
+            table.remove(self.obstacles, i)
+
+            -- play random wood sound effect
+            local soundNum = math.random(5)
+        end
+    end
+
+    -- remove all destroyed aliens from level
+    for i = #self.aliens, 1, -1 do
+        if self.aliens[i].body:isDestroyed() then
+            table.remove(self.aliens, i)
+        end
+    end
+  
     -- replace launch marker if original alien stopped moving
     if self.launchMarker.launched then
         local xPos, yPos = self.launchMarker.alien.body:getPosition()
