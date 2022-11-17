@@ -1,4 +1,4 @@
-# AngryBird - 2D Game <br>
+# AngryBirds - 2D Game <br>
 ## Play the game <br>
  Download and play the game, check my website: Cooming soon!
 
